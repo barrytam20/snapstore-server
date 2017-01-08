@@ -1,4 +1,4 @@
-export interface UserResponse{
+export interface UserTemplate{
     userId: string;
     firstName: string;
     lastName: string;

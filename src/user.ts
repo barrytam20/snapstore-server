@@ -15,5 +15,25 @@ export class User{
         this.email = email;
     }
 
-    
+    public setFirstName(firstName: string): void{
+        this.firstName = firstName;
+    }
+
+    public setLastName(lastName: string): void{
+        this.lastName = lastName;
+    }
+
+    public setEmail(email: string): void{
+        this.email = email;
+    }    
+
+    public getUser(): UserResponse{
+         let response: UserResponse = {
+             userId: this.userId,
+             firstName: this.firstName,
+             lastName: this.lastName,
+             email: this.email,
+         };
+         return response;
+    }
 }

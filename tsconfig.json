@@ -1,7 +1,15 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs"
+        "module": "commonjs",
+        "types": [
+            "node",
+            "core-js",
+            "chai"
+        ],
+        "typeRoots": [
+            "./node_modules/@types"
+        ]
     },
     "exclude": [
         "node_modules",

@@ -2,20 +2,30 @@
   "name": "snapstore-server",
   "version": "1.0.0",
   "description": "snapstore server code",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "tslint *.ts"
+    "lint": "tslint *.ts",
+    "compile": "tsc --outDir dist"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.7.21",
-    "base64-img": "^1.0.3"
+    "base64-img": "^1.0.3",
+    "crypto": "0.0.3",
+    "firebase": "^3.6.4",
+    "firebase-admin": "^4.0.4"
   },
   "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/core-js": "^0.9.35",
+    "@types/node": "^6.0.58",
     "codelyzer": "^2.0.0-beta.4",
+    "serverless": "^1.5.0",
+    "serverless-webpack": "^1.0.0-rc.3",
     "tslint": "^4.3.0",
-    "typescript": "^2.1.4"
+    "typescript": "^2.1.4",
+    "webpack": "^1.14.0",
+    "webpack-node-externals": "^1.5.4"
   }
 }
