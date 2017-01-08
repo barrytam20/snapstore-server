@@ -2,7 +2,7 @@
 import * as firebase from 'firebase'
 import * as admin from 'firebase-admin';
 
-var serviceAccount = require('./serviceAccount.json');
+var serviceAccount = require('json-loader!./serviceAccount.json');
 
 export class FB {
     private static fbInstance;

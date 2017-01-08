@@ -6,7 +6,7 @@ import { slsResponse } from '../slsResponse';
 
 let user = new User();
 
-module.exports.CreateUser = (event, context, callback) => {
+module.exports.createUser = (event, context, callback) => {
     let params = event.body;
     console.log('create user params: ' + JSON.stringify(params));
     user.createUser(params, (status, postUserResponse) => {
@@ -15,7 +15,7 @@ module.exports.CreateUser = (event, context, callback) => {
     });
 };
 
-module.exports.GetUser = (event, context, callback) => {
+module.exports.getUser = (event, context, callback) => {
     let userId = event.path.userId;
 
     user.getUser(userId, (status, getUserResponse) => {
@@ -24,7 +24,7 @@ module.exports.GetUser = (event, context, callback) => {
     });
 };
 
-module.exports.FindUserByEmail = (event, context, callback) => {
+module.exports.findUserByEmail = (event, context, callback) => {
     let email = event.path.email;
 
     user.findUserByEmail(email, (status, getUserResponse) => {
@@ -33,7 +33,7 @@ module.exports.FindUserByEmail = (event, context, callback) => {
     });
 };
 
-module.exports.UpdateUser = (event, context, callback) => {
+module.exports.updateUser = (event, context, callback) => {
     let userId = event.path.user_id;
     let params = event.body;
     console.log('update user params: ' + JSON.stringify(params));

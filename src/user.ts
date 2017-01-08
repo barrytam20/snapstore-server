@@ -1,6 +1,6 @@
 'use strict';
 
-import { UserResponse } from './interfaces/user-interface'
+import { UserTemplate } from './interfaces/user-interface'
 
 export class User{
     private userId: string;
@@ -27,8 +27,8 @@ export class User{
         this.email = email;
     }    
 
-    public getUser(): UserResponse{
-         let response: UserResponse = {
+    public getUser(): UserTemplate{
+         let response: UserTemplate = {
              userId: this.userId,
              firstName: this.firstName,
              lastName: this.lastName,

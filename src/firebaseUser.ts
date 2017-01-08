@@ -27,10 +27,10 @@ export class User {
                 });
             } else {
                 console.log('ERROR: User already exists with email');
-                callback(403, {"userId": userId, "message": "user already exists"});
+                callback(403, { "userId": userId, "message": "user already exists" });
             }
         });
-    
+
     }
 
     public getUser(userId: string, callback: (status: number, response: any) => void) {
@@ -81,7 +81,7 @@ export class User {
                 callback(200, null);
             }
         });
-    }    
+    }
 
     private findUserByEmailHelper(email: string, callback: (userId: string) => void) {
         let singleUserRef = this.userRef.orderByChild('number').equalTo(email);

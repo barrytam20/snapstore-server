@@ -12,35 +12,36 @@ custom:
 plugins:
   - serverless-webpack  
 
-CreateUser:
-  handler: user.CreateUser
-  events:
-    - http:
-        path: user
-        method: post
-        cors: true
-        integration: lambda
-GetUser:
-  handler: user.GetUser
-  events:
-    - http:
-        path: user/{user_id}
-        method: get
-        cors: true         
-        integration: lambda         
-FindUserByEmail:
-  handler: user.FindUserByEmail
-  events:
-    - http:
-        path: phone/{phoneNumber}
-        method: get
-        cors: true         
-        integration: lambda            
-UpdateUser:
-  handler: users.UpdateUser
-  events:
-    - http:
-        path: user/{user_id}
-        method: put
-        cors: true         
-        integration: lambda                
+functions:
+  createUser:
+    handler: user.createUser
+    events:
+      - http:
+          path: user
+          method: post
+          cors: true
+          integration: lambda
+  getUser:
+    handler: user.getUser
+    events:
+      - http:
+          path: user/{userId}
+          method: get
+          cors: true         
+          integration: lambda         
+  findUserByEmail:
+    handler: user.findUserByEmail
+    events:
+      - http:
+          path: email/{email}
+          method: get
+          cors: true         
+          integration: lambda            
+  updateUser:
+    handler: users.updateUser
+    events:
+      - http:
+          path: user/{userId}
+          method: put
+          cors: true         
+          integration: lambda                
