@@ -2,7 +2,7 @@
 
 import { UserTemplate } from '../interfaces/user-interface';
 import { User } from '../firebaseUser';
-import { slsResponse } from '../slsResponse';
+import { slsResponse } from '../helper/slsResponse';
 
 let user = new User();
 

@@ -1,7 +1,7 @@
 'use strict';
 import * as crypto from 'crypto';
 
-export class Auth {
+export class Token {
     private token: string;
     private userId: string;
     constructor(userId: string) {

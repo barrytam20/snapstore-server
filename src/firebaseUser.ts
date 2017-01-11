@@ -1,7 +1,7 @@
 'use strict';
 
 import * as firebase from 'firebase';
-import { FB } from './fbHelper/init'
+import { FB } from './helper/firebaseInit'
 import { UserTemplate } from './interfaces/user-interface'
 
 export class User {
@@ -84,7 +84,7 @@ export class User {
     }
 
     private findUserByEmailHelper(email: string, callback: (userId: string) => void) {
-        let singleUserRef = this.userRef.orderByChild('number').equalTo(email);
+        let singleUserRef = this.userRef.orderByChild('email').equalTo(email);
         singleUserRef.once('value', (snapshot: firebase.database.DataSnapshot) => {
             if (snapshot.exists()) {
                 snapshot.forEach((item) => {

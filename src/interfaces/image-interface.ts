@@ -1,7 +1,8 @@
-export interface ImageResponse{
+export interface ImageTemplate{
     imageId: string;
     userId: string;
-    data: string;
-    locale: string;
-    date: number;
+    imageContent: string;
+    postDate: number;
+    locale?: string;
+    caption?: string;
 }

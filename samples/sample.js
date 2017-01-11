@@ -7,29 +7,28 @@ AWS.config.update({
     endpoint: "dynamodb.us-east-1.amazonaws.com"
 });
 
+AWS.config.loadFromPath('../config/awsConfig.json');
+
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 var allImages = [
-    {"id":123, "date":1000000, "data":"asdjfhasdfy9a8s7dfasdhfashdfa8798789"},
-    {"id":124, "date":1000001, "data":"asdfasdfasssssasdfasdhfashdfa8798789"}
+    {"imageId":"123", "userId": "123", "postDate":1000000, "imageContent":"asdjfhasdfy9a8s7dfasdhfashdfa8798789"},
+    {"imageId":"124", "userId": "777", "postDate":1000001, "imageContent":"asdfasdfasssssasdfasdhfashdfa8798789"}
 ]
 
 function add(allImages){
     allImages.forEach(function(image) {
         var params = {
             TableName: "Images",
-            Item: {
-                "id":  image.id,
-                "date": image.date,
-                "data":  image.data
-            }
+            Item: image
         };
 
         docClient.put(params, function(err, data) {
             if (err) {
                 console.error("Unable to add image", image.id, ". Error JSON:", JSON.stringify(err, null, 2));
             } else {
-                console.log("PutItem succeeded:", image.id);
+                console.log('add item response: ' + JSON.stringify(data)); //response is {}
+                console.log("PutItem succeeded:", image.imageId);
             }
         });
     });
@@ -40,27 +39,30 @@ function get(id){
     var params = {
         TableName: 'Images',
         Key:{
-            id: id
+            imageId: id
         }
     };
     docClient.get(params, function(err, data) {
+        console.log('get data: ' + JSON.stringify(data));
         if (err) {
             console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
         } else {
+            console.log('get item response: ' + JSON.stringify(data)); 
+            //data = {"Item":{"date":1000000,"imageId":123,"data":"asdjfhasdfy9a8s7dfasdhfashdfa8798789","userId":123}}
             console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
         }
     });    
 }
 
-function update(id, note, locale){
+function update(id, caption, locale){
     var params = {
         TableName:"Images",
         Key:{
-            id: id
+            imageId: id
         },
-        UpdateExpression: "set note = :note, locale = :locale",
+        UpdateExpression: "set caption = :caption, locale = :locale",
         ExpressionAttributeValues:{
-            ":note":note,
+            ":caption":caption,
             ":locale": locale
         },
         ReturnValues:"UPDATED_NEW"
@@ -69,9 +71,9 @@ function update(id, note, locale){
     console.log("Updating the item...");
     docClient.update(params, function(err, data) {
         if (err) {
-            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err));
         } else {
-            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+            console.log("UpdateItem succeeded:", JSON.stringify(data));
         }
     });
 }
@@ -106,8 +108,9 @@ function picToText(){
 }
 
 //add(allImages);
-//get(123);
-//update(1231,'test note','Seattle');
+get("123");
+// update("123",'test caption','Seattle');
+// update(111,'test caption','Seattle');
 //addPic();
-textToPic();
+//textToPic();
 //picToText();

@@ -1,8 +1,7 @@
 'use strict';
-import * as firebase from 'firebase'
 import * as admin from 'firebase-admin';
 
-var serviceAccount = require('json-loader!./serviceAccount.json');
+var serviceAccount = require('json-loader!../../config/serviceAccount.json');
 
 export class FB {
     private static fbInstance;
