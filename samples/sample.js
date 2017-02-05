@@ -107,8 +107,27 @@ function picToText(){
     fs.writeFileSync('snap1.txt',data);
 }
 
+function getByUser(userId){
+    var params = {
+        TableName : "Images",
+        FilterExpression: "userId = :userId",
+        ExpressionAttributeValues: {
+            ":userId":userId
+        }
+    };
+
+    docClient.scan(params, function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            console.log('data: ' + JSON.stringify(data));
+        }
+    });    
+}
+
 //add(allImages);
-get("123");
+getByUser("12312");
 // update("123",'test caption','Seattle');
 // update(111,'test caption','Seattle');
 //addPic();

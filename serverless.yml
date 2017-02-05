@@ -62,7 +62,15 @@ functions:
           path: image/{imageId}
           method: get
           cors: true         
-          integration: lambda   
+          integration: lambda  
+  getImagesByUser:          
+    handler: image.getImagesByUser    
+    events:
+      - http:
+          path: user/{userId}/images
+          method: get
+          cors: true         
+          integration: lambda              
   updateImage:          
     handler: image.updateImage    
     events:

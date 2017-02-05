@@ -20,6 +20,18 @@ describe('AWS DynamoDB Image Logic', () => {
         });
     });
 
+    describe('get image by user id', () => {
+        it('retrieves all images from AWS by user id', (done) => {
+            awsInstance.getImagesByUser('123', (status, getImageResponse) => {
+                expect(status).to.equal(200);
+                getImageResponse.forEach(image => {
+                    expect(image.userId).to.equal('123');
+                });
+                done();
+            });
+        });
+    });
+
     describe('create image', () => {
         it('successfully posts image to AWS', (done) => {
             let image: ImageTemplate = {

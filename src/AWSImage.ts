@@ -35,6 +35,23 @@ export class AWSImage {
         });  
     }
 
+    public getImagesByUser(userId: string, callback: (status: number, response: any) => void){
+        const params = {
+            TableName : "Images",
+            FilterExpression: "userId = :userId",
+            ExpressionAttributeValues: {
+                ":userId":userId
+            }
+        };   
+        this.docClient.scan(params, (err, data) => {
+            if (err) {
+                callback(500, err)
+            } else {
+                callback(200, data.Items);
+            }
+        });          
+    }    
+
     public createImage(image: ImageTemplate, callback: (status: number, resposne: any) => void){
         const params = {
             TableName: "Images",

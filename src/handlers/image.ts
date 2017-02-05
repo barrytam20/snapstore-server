@@ -24,6 +24,15 @@ module.exports.getImage = (event, context, callback) => {
     });
 };
 
+module.exports.getImagesByUser = (event, context, callback) => {
+    let userId = event.path.userId;
+
+    awsImageInstance.getImagesByUser(userId, (status, getImagesResponse) => {
+        context.callbackWaitsForEmptyEventLoop = false;
+        slsResponse(status, getImagesResponse, callback);
+    });
+};
+
 module.exports.updateImage = (event, context, callback) => {
     let params = event.body;
     console.log('update user params: ' + JSON.stringify(params));
