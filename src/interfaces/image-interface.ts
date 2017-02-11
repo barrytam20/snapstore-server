@@ -5,4 +5,5 @@ export interface ImageTemplate{
     postDate: number;
     locale?: string;
     caption?: string;
+    thumbnail?: string;
 }

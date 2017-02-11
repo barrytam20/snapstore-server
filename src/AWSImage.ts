@@ -1,5 +1,7 @@
 import * as AWS from 'aws-sdk';
+import * as sharp from 'sharp';
 import { ImageTemplate } from './interfaces/image-interface';
+
 
 export class AWSImage {
     private docClient: AWS.DynamoDB.DocumentClient;
@@ -35,13 +37,14 @@ export class AWSImage {
         });  
     }
 
-    public getImagesByUser(userId: string, callback: (status: number, response: any) => void){
+    public getThumbnails(userId: string, callback: (status: number, response: any) => void){
         const params = {
             TableName : "Images",
             FilterExpression: "userId = :userId",
             ExpressionAttributeValues: {
                 ":userId":userId
-            }
+            },
+            ProjectionExpression: "imageId, postDate, thumbnail, userId"
         };   
         this.docClient.scan(params, (err, data) => {
             if (err) {
@@ -53,17 +56,22 @@ export class AWSImage {
     }    
 
     public createImage(image: ImageTemplate, callback: (status: number, resposne: any) => void){
-        const params = {
-            TableName: "Images",
-            Item: image
-        };      
-        this.docClient.put(params, (err, data) => {
-            if (err) {
-                callback(500, err);
-            } else {
-                callback(200, { "imageId": image.imageId});
-            }
-        });  
+        const thumbnailBuffer = new Buffer(image.imageContent.substring(22),'base64');
+        sharp(thumbnailBuffer).resize(100).toBuffer()
+            .then( thumbnail => {
+                image.thumbnail = 'data:image/jpg;base64,' + thumbnail.toString('base64');
+                const params = {
+                    TableName: "Images",
+                    Item: image
+                };      
+                this.docClient.put(params, (err, data) => {
+                    if (err) {
+                        callback(500, err);
+                    } else {
+                        callback(200, { "imageId": image.imageId});
+                    }
+                });                  
+            })
     }
 
     public updateImage(image: ImageTemplate, callback: (status: number, response: any) => void){

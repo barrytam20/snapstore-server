@@ -24,10 +24,10 @@ module.exports.getImage = (event, context, callback) => {
     });
 };
 
-module.exports.getImagesByUser = (event, context, callback) => {
+module.exports.getThumbnails = (event, context, callback) => {
     let userId = event.path.userId;
 
-    awsImageInstance.getImagesByUser(userId, (status, getImagesResponse) => {
+    awsImageInstance.getThumbnails(userId, (status, getImagesResponse) => {
         context.callbackWaitsForEmptyEventLoop = false;
         slsResponse(status, getImagesResponse, callback);
     });

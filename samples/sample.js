@@ -1,6 +1,7 @@
 var AWS = require("aws-sdk");
 var fs = require('fs');
 var base64Img = require('base64-img');
+var sharp = require('sharp');
 
 AWS.config.update({
     region: "us-east-1",
@@ -80,26 +81,35 @@ function update(id, caption, locale){
 
 function addPic(){
     var id = Date.now();
-    var data = fs.readFileSync('snap1.txt', 'utf8');
-    var params = {
-        TableName: "Images",
-        Item: {
-            "id":  id,
-            "data":  data
-        }
-    };
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.error("Unable to add image", id, ". Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("PutItem succeeded:", id);
-        }
-    });
+    var fullData = base64Img.base64Sync('./pic2.jpg');
+    fullData=Buffer.from(fullData.substring(22),'base64');
+    sharp(fullData).resize(200).toBuffer()
+        .then( data => {
+                var params = {
+                    TableName: "Images",
+                    Item: {
+                        imageId:  'testthumbnail2',
+                        userId: '123',
+                        imageContent:  fullData,
+                        postDate: new Date(id),
+                        thumbnail: 'data:image/jpg;base64,' + data.toString('base64')
+                    }
+                };
+                docClient.put(params, function(err, data) {
+                    if (err) {
+                        console.error("Unable to add image", id, ". Error JSON:", JSON.stringify(err, null, 2));
+                    } else {
+                        console.log("PutItem succeeded:", id);
+                    }
+                });
+        })
+        .catch(err => console.log(`sharp error ${err}`));
+
 }
 
 function textToPic(){
     var data = fs.readFileSync('snap1.txt', 'utf8');
-    var filepath = base64Img.imgSync(data, '', 'pic1');
+    var filepath = base64Img.imgSync(data, '', 'pic2');
 }
 
 function picToText(){
@@ -113,7 +123,8 @@ function getByUser(userId){
         FilterExpression: "userId = :userId",
         ExpressionAttributeValues: {
             ":userId":userId
-        }
+        },
+        ProjectionExpression: "imageId, postDate, thumbnail"
     };
 
     docClient.scan(params, function(err, data) {
@@ -127,9 +138,9 @@ function getByUser(userId){
 }
 
 //add(allImages);
-getByUser("12312");
+// getByUser("123");
 // update("123",'test caption','Seattle');
 // update(111,'test caption','Seattle');
-//addPic();
-//textToPic();
+addPic();
+// textToPic();
 //picToText();

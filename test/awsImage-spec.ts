@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { AWSImage } from '../src/AWSImage'
 import { ImageTemplate } from '../src/interfaces/image-interface';
+import * as base64Img from 'base64-img';
 
 describe('AWS DynamoDB Image Logic', () => {
     let awsInstance = new AWSImage();
@@ -8,7 +9,7 @@ describe('AWS DynamoDB Image Logic', () => {
         it('retrieves image from AWS', (done) => {
             awsInstance.getImage("124", (status, getImageResponse) => {
                 expect(status).to.equal(200);
-                expect(getImageResponse.imageContent).to.equal("asdfasdfasssssasdfasdhfashdfa8798789");
+                expect(getImageResponse.imageContent).to.equal("derrrr");
                 done();
             });
         });
@@ -38,7 +39,7 @@ describe('AWS DynamoDB Image Logic', () => {
                 "imageId": "testImageId", 
                 "userId": "testUser", 
                 "postDate": 1000001, 
-                "imageContent": "testimagedata"
+                "imageContent": base64Img.base64Sync('./pic2.jpg')
             };
             awsInstance.createImage(image, (status, postImageResponse) => {
                 expect(postImageResponse.imageId).to.equal("testImageId");

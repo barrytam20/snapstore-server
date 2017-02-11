@@ -6,8 +6,13 @@
     "test": "npm run compile && mocha dist/test",
     "lint": "tslint *.ts",
     "compile": "npm run clean && tsc --outDir dist",
-    "deploy": "npm run clean && sls deploy",
-    "clean": "rimraf .dist .serverless dist"
+    "deploy": "npm run clean && sls deploy --v",
+    "clean": "rimraf .dist .serverless dist",
+    "upload:s3": "npm run clean && aws s3 sync . s3://snapstore-code-temp-repo/ --delete --exclude 'samples/*' --exclude 'node_modules/*' --exclude 'test/*' --exclude '.git/*'",
+    "download:s3": "aws s3 sync s3://snapstore-code-temp-repo/ .",
+    "clean:s3": "aws s3 rm s3://snapstore-code-temp-repo/ --recursive",
+    "deploy:aws": "npm run upload:s3 && node deploy-from-aws.js",
+    "deploy:s3": "npm run download:s3 && npm install && npm run deploy"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +23,8 @@
     "email-validator": "^1.0.7",
     "firebase": "^3.6.5",
     "firebase-admin": "^4.0.4",
-    "json-loader": "^0.5.4"
+    "json-loader": "^0.5.4",
+    "sharp": "^0.17.1"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
@@ -30,6 +36,7 @@
     "mocha": "^3.2.0",
     "serverless": "^1.5.0",
     "serverless-webpack": "^1.0.0-rc.3",
+    "ssh-exec": "^2.0.0",
     "ts-loader": "^1.3.3",
     "tslint": "^4.3.0",
     "typescript": "^2.1.4",

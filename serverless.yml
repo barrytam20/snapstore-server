@@ -63,8 +63,12 @@ functions:
           method: get
           cors: true         
           integration: lambda  
-  getImagesByUser:          
-    handler: image.getImagesByUser    
+          response:
+            headers:
+              Content-Type: "'application/json'"
+              Content-Encoding: "'gzip'"
+  getThumbnails:          
+    handler: image.getThumbnails    
     events:
       - http:
           path: user/{userId}/images
