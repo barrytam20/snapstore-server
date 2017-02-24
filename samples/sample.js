@@ -35,6 +35,23 @@ function add(allImages){
     });
 }
 
+function deleteImage(id){
+        const params = {
+            TableName: 'Images',
+            Key:{
+                imageId: id
+            }
+        };
+        docClient.delete(params, (err, data) => {
+            if (err) {
+                console.log(500, err)
+            } else {
+                console.log(JSON.stringify(data));
+                console.log('hey there');
+            }
+        });  
+}
+
 function get(id){
 
     var params = {
@@ -141,6 +158,7 @@ function getByUser(userId){
 // getByUser("123");
 // update("123",'test caption','Seattle');
 // update(111,'test caption','Seattle');
-addPic();
+// addPic();
 // textToPic();
 //picToText();
+deleteImage("1486787125286");

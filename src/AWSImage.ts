@@ -68,7 +68,10 @@ export class AWSImage {
                     if (err) {
                         callback(500, err);
                     } else {
-                        callback(200, { "imageId": image.imageId});
+                        callback(200, { 
+                            imageId: image.imageId,
+                            thumbnail: image.thumbnail
+                        });
                     }
                 });                  
             })
@@ -116,7 +119,7 @@ export class AWSImage {
             if (err) {
                 callback(500, err)
             } else {
-                callback(200, data);
+                callback(200, {imageId: imageId});
             }
         });  
     }    

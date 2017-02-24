@@ -63,10 +63,6 @@ functions:
           method: get
           cors: true         
           integration: lambda  
-          response:
-            headers:
-              Content-Type: "'application/json'"
-              Content-Encoding: "'gzip'"
   getThumbnails:          
     handler: image.getThumbnails    
     events:
