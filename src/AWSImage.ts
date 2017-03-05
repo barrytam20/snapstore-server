@@ -53,6 +53,25 @@ export class AWSImage {
                 callback(200, data.Items);
             }
         });          
+    }
+
+    public getUsers(callback: (status: number, response: any) => void){
+        const params  = {
+            TableName : "Images",
+            ProjectionExpression: "userId"
+        };
+        this.docClient.scan(params, (err, data) => {
+            if (err) {
+                callback(500, err)
+            } else {
+                let userSet = new Set<string>();
+                data.Items.forEach((entry: any) => {
+                    userSet.add(entry.userId);
+                });
+                const userIdArray = Array.from(userSet);
+                callback(200, userIdArray);
+            }
+        });  
     }    
 
     public createImage(image: ImageTemplate, callback: (status: number, resposne: any) => void){

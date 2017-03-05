@@ -50,3 +50,10 @@ module.exports.deleteImage = (event, context, callback) => {
         slsResponse(status, deleteImageResponse, callback);
     });
 };
+
+module.exports.getUsers = (event, context, callback) => {
+    awsImageInstance.getUsers((status, getUsersResponse) => {
+        context.callbackWaitsForEmptyEventLoop = false;
+        slsResponse(status, getUsersResponse, callback);
+    });
+};

@@ -13,40 +13,6 @@ plugins:
   - serverless-webpack  
 
 functions:
-# users services
-  createUser:
-    handler: user.createUser
-    events:
-      - http:
-          path: user
-          method: post
-          cors: true
-          integration: lambda
-  getUser:
-    handler: user.getUser
-    events:
-      - http:
-          path: user/{userId}
-          method: get
-          cors: true         
-          integration: lambda         
-  findUserByEmail:
-    handler: user.findUserByEmail
-    events:
-      - http:
-          path: email/{email}
-          method: get
-          cors: true         
-          integration: lambda            
-  updateUser:
-    handler: users.updateUser
-    events:
-      - http:
-          path: user/{userId}
-          method: put
-          cors: true         
-          integration: lambda                
-# image services
   createImage:
     handler: image.createImage    
     events:
@@ -86,29 +52,12 @@ functions:
           path: image/{imageId}
           method: delete
           cors: true         
-          integration: lambda        
-# account services
-  Login:
-    handler: account.login
+          integration: lambda      
+  getUsers:          
+    handler: image.getUsers    
     events:
       - http:
-          path: account/login
-          method: post
-          cors: true
-          integration: lambda
-  Register:
-    handler: account.register
-    events:
-      - http:
-          path: account/register
-          method: post
-          cors: true
-          integration: lambda  
-  DeleteAccount:
-    handler: account.delete
-    events:
-      - http:
-          path: account/{userId}
-          method: delete
-          cors: true
-          integration: lambda           
+          path: users
+          method: get
+          cors: true         
+          integration: lambda                 

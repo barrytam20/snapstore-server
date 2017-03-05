@@ -154,6 +154,28 @@ function getByUser(userId){
     });    
 }
 
+function getUsers(){
+    var params = {
+        TableName : "Images",
+        ProjectionExpression: "userId"
+    };
+
+    docClient.scan(params, function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            console.log('data: ' + JSON.stringify(data));
+            var set = new Set();
+            data.Items.forEach((entry) => {
+                console.log(entry.userId);
+                set.add(entry.userId);
+            });
+            console.log(`set: ${Array.from(set)}`);
+        }
+    });        
+}
+
 //add(allImages);
 // getByUser("123");
 // update("123",'test caption','Seattle');
@@ -161,4 +183,5 @@ function getByUser(userId){
 // addPic();
 // textToPic();
 //picToText();
-deleteImage("1486787125286");
+// deleteImage("1486787125286");
+getUsers();

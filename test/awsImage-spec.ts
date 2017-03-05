@@ -23,7 +23,7 @@ describe('AWS DynamoDB Image Logic', () => {
 
     describe('get image by user id', () => {
         it('retrieves all images from AWS by user id', (done) => {
-            awsInstance.getImagesByUser('123', (status, getImageResponse) => {
+            awsInstance.getThumbnails('123', (status, getImageResponse) => {
                 expect(status).to.equal(200);
                 getImageResponse.forEach(image => {
                     expect(image.userId).to.equal('123');
@@ -39,7 +39,7 @@ describe('AWS DynamoDB Image Logic', () => {
                 "imageId": "testImageId", 
                 "userId": "testUser", 
                 "postDate": 1000001, 
-                "imageContent": base64Img.base64Sync('./pic2.jpg')
+                "imageContent": base64Img.base64Sync('./samples/pic2.jpg')
             };
             awsInstance.createImage(image, (status, postImageResponse) => {
                 expect(postImageResponse.imageId).to.equal("testImageId");
@@ -73,5 +73,20 @@ describe('AWS DynamoDB Image Logic', () => {
                 done();
             });
         });           
-    });        
+    });  
+
+    describe('get users', () => {
+        it('gets distinct list of userIds from AWS', (done) => {
+            awsInstance.getUsers((status, getUsersResponse) => {
+                let userSet = new Set<string>();
+                expect(status).to.equal(200);
+                expect(getUsersResponse).to.be.instanceof(Array);
+                getUsersResponse.forEach((userId) => {
+                    expect(userSet.has(userId)).to.be.false;
+                    userSet.add(userId);
+                });
+                done();
+            })
+        })
+    })      
 });

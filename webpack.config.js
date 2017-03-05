@@ -3,9 +3,7 @@ var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: {
-        user: ['./src/handlers/user'],
-        image: ['./src/handlers/image'],
-        account: ['./src/handlers/account'],
+        image: ['./src/handlers/image']
     },
     target: 'node',
     module: {
